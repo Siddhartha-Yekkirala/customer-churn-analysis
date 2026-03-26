@@ -1,0 +1,22 @@
+-- Total Customers
+SELECT COUNT(*) AS total_customers FROM churn_data;
+
+-- Churn Rate
+SELECT 
+    COUNT(CASE WHEN Churn = 'Yes' THEN 1 END) * 100.0 / COUNT(*) AS churn_rate
+FROM churn_data;
+
+-- Customers by Contract Type
+SELECT Contract, COUNT(*) AS total
+FROM churn_data
+GROUP BY Contract;
+
+-- High Risk Customers
+SELECT *
+FROM churn_data
+WHERE MonthlyCharges > 80 AND Churn = 'Yes';
+
+-- Average Charges by Churn
+SELECT Churn, AVG(MonthlyCharges) AS avg_monthly
+FROM churn_data
+GROUP BY Churn;
