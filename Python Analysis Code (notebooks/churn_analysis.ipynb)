@@ -1,0 +1,27 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load dataset
+df = pd.read_csv('../data/churn_data.csv')
+
+# Data Cleaning
+df.dropna(inplace=True)
+
+# Convert TotalCharges to numeric
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+
+# Churn Count
+churn_count = df['Churn'].value_counts()
+print(churn_count)
+
+# Churn Rate
+churn_rate = churn_count['Yes'] / len(df)
+print("Churn Rate:", churn_rate)
+
+# Visualization
+churn_count.plot(kind='bar', title='Customer Churn Distribution')
+plt.show()
+
+# Monthly Charges vs Churn
+df.boxplot(column='MonthlyCharges', by='Churn')
+plt.show()
